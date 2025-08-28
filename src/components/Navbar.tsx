@@ -11,6 +11,19 @@ const Navbar = () => {
 
   console.log('Navbar rendered, cart items:', state.items.length, 'current path:', location.pathname);
 
+  const scrollToSection = (sectionId: string) => {
+    // Si no estamos en la página principal, navegar primero
+    if (location.pathname !== '/') {
+      window.location.href = `/#${sectionId}`;
+      return;
+    }
+    
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <>
       <nav className="bg-gradient-to-r from-purple-900 via-blue-900 to-indigo-900 text-white shadow-lg sticky top-0 z-50">
@@ -34,7 +47,12 @@ const Navbar = () => {
                 >
                   Inicio
                 </Link>
-                <a href="#productos" className="hover:text-yellow-400 transition-colors">Productos</a>
+                <button 
+                  onClick={() => scrollToSection('productos')}
+                  className="hover:text-yellow-400 transition-colors"
+                >
+                  Productos
+                </button>
                 <Link 
                   to="/about" 
                   className={`hover:text-yellow-400 transition-colors ${
@@ -43,7 +61,12 @@ const Navbar = () => {
                 >
                   Sobre Nosotros
                 </Link>
-                <a href="#contacto" className="hover:text-yellow-400 transition-colors">Contacto</a>
+                <button 
+                  onClick={() => scrollToSection('contacto')}
+                  className="hover:text-yellow-400 transition-colors"
+                >
+                  Contacto
+                </button>
               </nav>
               
               <button
