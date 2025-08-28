@@ -1,33 +1,49 @@
 import React from 'react';
 import { ShoppingCart, Rocket, Star } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
 import CartDrawer from './CartDrawer';
 
 const Navbar = () => {
   const { state } = useCart();
   const [isCartOpen, setIsCartOpen] = React.useState(false);
+  const location = useLocation();
 
-  console.log('Navbar rendered, cart items:', state.items.length);
+  console.log('Navbar rendered, cart items:', state.items.length, 'current path:', location.pathname);
 
   return (
     <>
       <nav className="bg-gradient-to-r from-purple-900 via-blue-900 to-indigo-900 text-white shadow-lg sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
+            <Link to="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
               <Rocket className="h-8 w-8 text-yellow-400" />
               <h1 className="text-2xl font-bold bg-gradient-to-r from-yellow-400 to-pink-400 bg-clip-text text-transparent">
                 Gatitos Espaciales
               </h1>
               <Star className="h-6 w-6 text-yellow-400 animate-pulse" />
-            </div>
+            </Link>
             
             <div className="flex items-center space-x-6">
               <nav className="hidden md:flex space-x-6">
-                <a href="#" className="hover:text-yellow-400 transition-colors">Inicio</a>
-                <a href="#" className="hover:text-yellow-400 transition-colors">Productos</a>
-                <a href="#" className="hover:text-yellow-400 transition-colors">Sobre Nosotros</a>
-                <a href="#" className="hover:text-yellow-400 transition-colors">Contacto</a>
+                <Link 
+                  to="/" 
+                  className={`hover:text-yellow-400 transition-colors ${
+                    location.pathname === '/' ? 'text-yellow-400 font-semibold' : ''
+                  }`}
+                >
+                  Inicio
+                </Link>
+                <a href="#productos" className="hover:text-yellow-400 transition-colors">Productos</a>
+                <Link 
+                  to="/about" 
+                  className={`hover:text-yellow-400 transition-colors ${
+                    location.pathname === '/about' ? 'text-yellow-400 font-semibold' : ''
+                  }`}
+                >
+                  Sobre Nosotros
+                </Link>
+                <a href="#contacto" className="hover:text-yellow-400 transition-colors">Contacto</a>
               </nav>
               
               <button
